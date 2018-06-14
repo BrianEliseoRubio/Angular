@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html >
+
+  <head>
+    <meta charset="utf-8" />
+    <link rel = "stylesheet" href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <link data-require="bootstrap-css" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script data-require="angular.js@1.2.x" src="https://code.angularjs.org/1.2.28/angular.js" data-semver="1.2.28"></script>
+    
+    <!-- Google Maps JavaScript API -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4ef_wY-RbpJfG8kWS-rygmwFOHmgbg_Q&libraries=places"></script>
+    
+    <!-- vsGoogleAutocomplete -->
+    <script src="vs-google-autocomplete.js"></script>
+    
+    <script src="app.js"></script>
+    <style>
+      form {
+             width: 560px;
+             font: normal bold 12px Verdana, Arial;
+             padding: 60px;
+         }
+
+         form label {
+             display: inline-block;
+             width: 150px;
+         }
+
+         form input {
+             display: inline-block;
+             width: 285px;
+             margin-bottom: 10px;
+         }
+
+          .buton{
+            float: right;
+            width: 50px;
+            padding: 4px;
+        } 
+         .datepickerdemo md-content {
+            padding-bottom: 200px; 
+         }
+         
+        .datepickerdemo .validation-messages {
+            font-size: 11px;
+            color: darkred;
+            margin: 10px 0 0 25px; 
+         }
+         form input[type="email"]:required:valid{
+           border:2px solid green;
+           /* otras propiedades */
+          }
+          /*caso contrario, el color sera rojo*/
+          form input[type="email"]:focus:required:invalid{
+           border:2px solid red;
+           /* otras propiedades */
+          }
+
+      </style>
+  </head>
+
+
+  <!-- 
+  * Dependency: Google Maps JavaScript API v3
+  * Google Maps API info: https://developers.google.com/maps/documentation/javascript/places-autocomplete
+  * Usage: 
+  *   1. add <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+  *   2. add vs-google-autocomplete.js
+  *   3. add vs-google-autocomplete directive to input field
+  -->
+  <body ng-app="plunker">
+    <div class="container">
+      
+      <h3>Example of vsGoogleAutocomplete module</h3>
+      <h5>Also look at <a href="http://plnkr.co/edit/u91e8N?p=preview">example</a> of a autocomplete validation through embedded validator</h5>
+      
+      <h1  ng-controller="Estilos" ng-style="Encabezado">Green Leaves <img ng-style="Img" src="https://images.vexels.com/media/users/3/127904/isolated/preview/199495f673268aed2d4b3b9202b350e4-hoja-verde-st-patrick-by-vexels.png"></h1>
+
+
+     
+
+      <form name="myForm" novalidate>
+      <div ng-class="{'has-error':myForm.nombre$invalid && myForm.nombre.$dirty}"></div>
+      <label>Nombre:</label><input type="text" id="nombre"name="nombre" ng-model="nombre" required=""  /><br />
+      <div ng-class="{'has-error':myForm.email$invalid && myForm.email.$dirty}"></div>
+      <label>E-mail:</label><input type="email" id="email" name="email" ng-model="email" ng-required /><br />
+      <div ng-class="{'has-error':myForm.tele$invalid && myForm.tele.$dirty}"></div>
+      <label>Telefono:</label><input type="text" id="tele"   name="tele" ng-minlength="12" ng-maxlength="12" required /><br />
+      <div ng-class="{'has-error':myForm.fecha$invalid && myForm.fecha.$dirty}"></div>
+      <label>Fecha:</label><input type="date" id="fecha"name="fecha" e-dateformat="dd-MMM-yyyy" ng-model="myDate" value="myDate" 
+          placeholder="yyyy-MMM-dd"  required  /><br />
+      <div ng-class="{'has-error':myForm.place$invalid && myForm.place.$dirty}"></div>
+      <label>Ciudad y Estado:</label><input 
+       vs-google-autocomplete
+                 ng-model="place" 
+                 type="text" 
+                 name="place"
+                 id="place"  
+                 required >
+
+                 <br />
+      <input type="submit" value="Enviar"  class="buton"  />
+
+      <span style="color:red" ng-show="myForm.nombre.$dirty && myForm.nombre.$invalid">
+      <span ng-show="myForm.nombre.$error.required">El Usuario esta vacio.</span>
+      </span>
+      <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+      <span ng-show="myForm.email.$error.required">E-mail es requerido.</span>
+      <span ng-show="myForm.email.$error.email">Invalido E-mail .</span>
+      </span>
+
+      <span style="color:red" ng-show="myForm.tele.$dirty && myForm.tele.$invalid">
+      <span ng-show="myForm.tele.$error.required">Telefono es requerido.</span>
+      <span ng-show="myForm.tele.$error.telefono">Invalido E-mail .</span>
+      </span>
+
+      <span style="color:red" ng-show="myForm.fecha.$dirty && myForm.fecha.$invalid">
+      <span ng-show="myForm.fecha.$error.required">La Fecha es requerido.</span>
+      </span>
+
+      <span style="color:red" ng-show="myForm.place.$dirty && myForm.place.$invalid">
+      <span ng-show="myForm.place.$error.required">La Fecha es requerido.</span>
+      </span>
+
+      
+
+    </div>
+  </body>
+
+</html>
